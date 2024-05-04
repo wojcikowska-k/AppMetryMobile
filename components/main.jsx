@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -39,8 +38,11 @@ export const Main = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const renderHeader = () => (
-    <View>
-      <Text style={styles.modalTitle}>Tabela Wymiarów</Text>
+    <View style={styles.header}>
+      <Text style={styles.headerCell}>MB</Text>
+      <Text style={styles.headerCell}>2 mm</Text>
+      <Text style={styles.headerCell}>0,8 mm</Text>
+      <Text style={styles.headerCell}>0,5 mm</Text>
     </View>
   );
 
@@ -58,7 +60,7 @@ export const Main = () => {
       <Text style={styles.label}>Wybierz grubość okleiny</Text>
       <Picker
         selectedValue={veneerThickness}
-        onValueChange={(itemValue) => setVeneerThickness(itemValue)}
+        onValueChange={setVeneerThickness}
         style={styles.picker}
         mode="dropdown"
       >
@@ -90,13 +92,6 @@ export const Main = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.resultContainer}>
-        <Text style={styles.resultText}>
-          Całkowita długość okleiny - wg metody{" "}
-          <Text style={styles.bold}>tabelarycznej</Text>: 0 mb
-        </Text>
-      </View>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -104,24 +99,22 @@ export const Main = () => {
         onRequestClose={() => setIsModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <ScrollView style={{ width: "100%" }}>
-            <View style={styles.modalContent}>
-              <FlatList
-                data={rows}
-                keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={renderHeader}
-                ListFooterComponent={renderFooter}
-                renderItem={({ item }) => (
-                  <View style={styles.row}>
-                    <Text style={styles.cell}>{item.mb}</Text>
-                    <Text style={styles.cell}>{item.twoMM}</Text>
-                    <Text style={styles.cell}>{item.eightMM}</Text>
-                    <Text style={styles.cell}>{item.fiveMM}</Text>
-                  </View>
-                )}
-              />
-            </View>
-          </ScrollView>
+          <View style={styles.modalContent}>
+            <FlatList
+              data={rows}
+              keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={renderHeader}
+              ListFooterComponent={renderFooter}
+              renderItem={({ item }) => (
+                <View style={styles.row}>
+                  <Text style={styles.cell}>{item.mb}</Text>
+                  <Text style={styles.cell}>{item.twoMM}</Text>
+                  <Text style={styles.cell}>{item.eightMM}</Text>
+                  <Text style={styles.cell}>{item.fiveMM}</Text>
+                </View>
+              )}
+            />
+          </View>
         </View>
       </Modal>
     </View>
@@ -133,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+
   label: {
     marginBottom: 8,
     fontSize: 16,
@@ -202,6 +196,16 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+  header: {
+    flexDirection: "row",
+    backgroundColor: "#ddd",
+    padding: 10,
+  },
+  headerCell: {
+    flex: 1,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   row: {
     flexDirection: "row",
     padding: 10,
@@ -211,6 +215,7 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     textAlign: "center",
+    fontSize: 10,
   },
 
   closeButton: {
