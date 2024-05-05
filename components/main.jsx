@@ -125,29 +125,34 @@ export const Main = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonTable}
-        onPress={() => setIsModalVisible(true)}
-      >
-        <Text style={styles.buttonText}>Tabela: 2.0mm, 0.8mm, 0.5mm</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonTable}
-        onPress={() => setIsModalVisible2(true)}
-      >
-        <Text style={styles.buttonText}>Tabela: 1.5mm, 1.2mm, 1.0mm</Text>
-      </TouchableOpacity>
-      <Text style={styles.label}>Wybierz grubość okleiny</Text>
-      <Picker
-        selectedValue={veneerThickness}
-        onValueChange={setVeneerThickness}
-        style={styles.picker}
-        mode="dropdown"
-      >
-        <Picker.Item label="0.8 mm" value="0.8" />
-        <Picker.Item label="2.0 mm" value="2.0" />
-        <Picker.Item label="0.5 mm" value="0.5" />
-      </Picker>
+      <View style={styles.inputContainerTables}>
+        <TouchableOpacity
+          style={styles.buttonTable}
+          onPress={() => setIsModalVisible(true)}
+        >
+          <Text style={styles.buttonText}>Tabela: 2.0mm, 0.8mm, 0.5mm</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonTable}
+          onPress={() => setIsModalVisible2(true)}
+        >
+          <Text style={styles.buttonText}>Tabela: 1.5mm, 1.2mm, 1.0mm</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Wybierz grubość okleiny</Text>
+        <Picker
+          selectedValue={veneerThickness}
+          onValueChange={setVeneerThickness}
+          style={styles.picker}
+          mode="dropdown"
+        >
+          <Picker.Item label="0.8 mm" value="0.8" />
+          <Picker.Item label="2.0 mm" value="2.0" />
+          <Picker.Item label="0.5 mm" value="0.5" />
+        </Picker>
+      </View>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Grubość rolki</Text>
@@ -240,12 +245,16 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   picker: {
-    marginBottom: 20,
     backgroundColor: "#F0F0F0",
     color: "#000",
+    borderRadius: 5,
+  },
+  inputContainerTables: {
+    marginBottom: 20,
+    gap: 10,
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: "#F0F0F0",
