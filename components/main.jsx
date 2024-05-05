@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Keyboard,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -55,6 +56,7 @@ export const Main = () => {
   const [isModalVisible2, setIsModalVisible2] = useState(false);
 
   const calculate = () => {
+    Keyboard.dismiss();
     let total = 0;
     const thickness = parseFloat(veneerThickness);
     const rollThicknessValue = parseFloat(rollThickness);
