@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "AppMetry",
-    "slug": "AppMetry",
+    "slug": "appmetry",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,13 +17,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon2.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.AppMetry.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/icon2.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "07c018b9-af19-4f83-8c02-d89a5fbe5be2"
+      }
+    },
+    "owner": "neveryru"
   }
 }
