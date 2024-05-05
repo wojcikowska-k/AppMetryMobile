@@ -32,17 +32,41 @@ const rows = [
   { mb: "900 mb", twoMM: "x", eightMM: "x", fiveMM: "29.4 cm" },
 ];
 
+const rows2 = [
+  { mb: "25 mb", oneFiveMM: "x", oneTwoMM: "x", oneZeroMM: "2.5 cm" },
+  { mb: "50 mb", oneFiveMM: "8.0 cm", oneTwoMM: "5.5 cm", oneZeroMM: "6.0 cm" },
+  {
+    mb: "100 mb",
+    oneFiveMM: "13.5 cm",
+    oneTwoMM: "10.5 cm",
+    oneZeroMM: "10.3 cm",
+  },
+  { mb: "150 mb", oneFiveMM: "x", oneTwoMM: "x", oneZeroMM: "13.7 cm" },
+  { mb: "200 mb", oneFiveMM: "x", oneTwoMM: "x", oneZeroMM: "16.7 cm" },
+  { mb: "250 mb", oneFiveMM: "x", oneTwoMM: "x", oneZeroMM: "19.5 cm" },
+  { mb: "300 mb", oneFiveMM: "x", oneTwoMM: "x", oneZeroMM: "21.7 cm" },
+];
+
 export const Main = () => {
   const [veneerThickness, setVeneerThickness] = useState("0.8");
   const [rollThickness, setRollThickness] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible2, setIsModalVisible2] = useState(false);
 
   const renderHeader = () => (
     <View style={styles.header}>
       <Text style={styles.headerCell}>MB</Text>
-      <Text style={styles.headerCell}>2 mm</Text>
+      <Text style={styles.headerCell}>2,0 mm</Text>
       <Text style={styles.headerCell}>0,8 mm</Text>
       <Text style={styles.headerCell}>0,5 mm</Text>
+    </View>
+  );
+  const renderHeader2 = () => (
+    <View style={styles.header}>
+      <Text style={styles.headerCell}>MB</Text>
+      <Text style={styles.headerCell}>1,5 mm</Text>
+      <Text style={styles.headerCell}>1,2 mm</Text>
+      <Text style={styles.headerCell}>1,0 mm</Text>
     </View>
   );
 
@@ -55,8 +79,29 @@ export const Main = () => {
     </TouchableOpacity>
   );
 
+  const renderFooter2 = () => (
+    <TouchableOpacity
+      style={styles.closeButton}
+      onPress={() => setIsModalVisible2(false)}
+    >
+      <Text style={styles.closeButtonText}>Zamknij</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.buttonTable}
+        onPress={() => setIsModalVisible(true)}
+      >
+        <Text style={styles.buttonText}>Tabela: 2.0mm, 0.8mm, 0.5mm</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonTable}
+        onPress={() => setIsModalVisible2(true)}
+      >
+        <Text style={styles.buttonText}>Tabela: 1.5mm, 1.2mm, 1.0mm</Text>
+      </TouchableOpacity>
       <Text style={styles.label}>Wybierz grubość okleiny</Text>
       <Picker
         selectedValue={veneerThickness}
@@ -83,12 +128,6 @@ export const Main = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Policz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setIsModalVisible(true)}
-        >
-          <Text style={styles.buttonText}>Tabela</Text>
         </TouchableOpacity>
       </View>
 
@@ -117,16 +156,42 @@ export const Main = () => {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible2}
+        onRequestClose={() => setIsModalVisible2(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <FlatList
+              data={rows2}
+              keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={renderHeader2}
+              ListFooterComponent={renderFooter2}
+              renderItem={({ item }) => (
+                <View style={styles.row}>
+                  <Text style={styles.cell}>{item.mb}</Text>
+                  <Text style={styles.cell}>{item.oneFiveMM}</Text>
+                  <Text style={styles.cell}>{item.oneTwoMM}</Text>
+                  <Text style={styles.cell}>{item.oneZeroMM}</Text>
+                </View>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
+    flex: 2,
+    width: "90%",
+    gap: 20,
   },
-
   label: {
     marginBottom: 8,
     fontSize: 16,
@@ -158,9 +223,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  buttonTable: {
+    backgroundColor: "#007AFF",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
   buttonText: {
     color: "#FFF",
     fontSize: 16,
+    textAlign: "center",
   },
   resultContainer: {
     alignItems: "center",
@@ -220,7 +292,7 @@ const styles = StyleSheet.create({
 
   closeButton: {
     marginTop: 10,
-    backgroundColor: "#FF6347",
+    backgroundColor: "#007AFF",
     padding: 10,
     borderRadius: 5,
   },
