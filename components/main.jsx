@@ -50,8 +50,43 @@ const rows2 = [
 export const Main = () => {
   const [veneerThickness, setVeneerThickness] = useState("0.8");
   const [rollThickness, setRollThickness] = useState("");
+  const [calculatedValue, setCalculatedValue] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
+
+  const calculate = () => {
+    let total = 0;
+    const thickness = parseFloat(veneerThickness);
+    const rollThicknessValue = parseFloat(rollThickness);
+
+    if (thickness === 0.5) {
+      total =
+        59.129 * Math.pow(rollThicknessValue, 2) +
+        1307.8 * rollThicknessValue +
+        500.31;
+    } else if (thickness === 0.8) {
+      total =
+        41.435 * Math.pow(rollThicknessValue, 2) +
+        770.66 * rollThicknessValue +
+        70.674;
+    } else if (thickness === 1.0) {
+      total =
+        40.083 * Math.pow(rollThicknessValue, 2) +
+        462.91 * rollThicknessValue +
+        983.99;
+    } else if (thickness === 1.2) {
+      total = 2.0001 * rollThicknessValue + 0.5006;
+    } else if (thickness === 1.5) {
+      total = 2.0005 * rollThicknessValue + 2.504;
+    } else if (thickness === 2.0) {
+      total =
+        23.048 * Math.pow(rollThicknessValue, 2) +
+        82.342 * rollThicknessValue +
+        1595.7;
+    }
+
+    setCalculatedValue(`${Math.round(total / 100)} mb`);
+  };
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -127,8 +162,14 @@ export const Main = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Policz</Text>
+          <Text style={styles.buttonText} onPress={() => calculate()}>
+            Policz
+          </Text>
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.header}>
+        <Text style={styles.headerCell}>{calculatedValue}</Text>
       </View>
 
       <Modal
@@ -215,8 +256,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
   },
   button: {
     backgroundColor: "#007AFF",
