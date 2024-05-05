@@ -107,24 +107,6 @@ export const Main = () => {
     </View>
   );
 
-  const renderFooter = () => (
-    <TouchableOpacity
-      style={styles.closeButton}
-      onPress={() => setIsModalVisible(false)}
-    >
-      <Text style={styles.closeButtonText}>Zamknij</Text>
-    </TouchableOpacity>
-  );
-
-  const renderFooter2 = () => (
-    <TouchableOpacity
-      style={styles.closeButton}
-      onPress={() => setIsModalVisible2(false)}
-    >
-      <Text style={styles.closeButtonText}>Zamknij</Text>
-    </TouchableOpacity>
-  );
-
   return (
     <View style={styles.container}>
       <View style={styles.inputContainerTables}>
@@ -164,6 +146,7 @@ export const Main = () => {
           value={rollThickness}
           placeholder="podaj grubość w cm"
           keyboardType="numeric"
+          onSubmitEditing={calculate}
         />
       </View>
 
@@ -185,13 +168,16 @@ export const Main = () => {
         visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(false)}
       >
-        <View style={styles.modalOverlay}>
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={() => setIsModalVisible(false)}
+        >
           <View style={styles.modalContent}>
             <FlatList
               data={rows}
               keyExtractor={(item, index) => index.toString()}
               ListHeaderComponent={renderHeader}
-              ListFooterComponent={renderFooter}
               renderItem={({ item }) => (
                 <View style={styles.row}>
                   <Text style={styles.cell}>{item.mb}</Text>
@@ -202,7 +188,7 @@ export const Main = () => {
               )}
             />
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
 
       <Modal
@@ -211,13 +197,16 @@ export const Main = () => {
         visible={isModalVisible2}
         onRequestClose={() => setIsModalVisible2(false)}
       >
-        <View style={styles.modalOverlay}>
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={() => setIsModalVisible2(false)}
+        >
           <View style={styles.modalContent}>
             <FlatList
               data={rows2}
               keyExtractor={(item, index) => index.toString()}
               ListHeaderComponent={renderHeader2}
-              ListFooterComponent={renderFooter2}
               renderItem={({ item }) => (
                 <View style={styles.row}>
                   <Text style={styles.cell}>{item.mb}</Text>
@@ -228,7 +217,7 @@ export const Main = () => {
               )}
             />
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
     </View>
   );
